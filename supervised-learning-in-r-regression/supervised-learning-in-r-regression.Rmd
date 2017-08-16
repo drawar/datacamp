@@ -1,0 +1,43 @@
+---
+title: "Supervised Learning in R: Regression"
+output: html_notebook
+---
+
+### Multivariate linear regression (Part 1)
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+# Load data
+bloodpressure <- readRDS("data/bloodpressure.rds")
+summary(bloodpressure)
+
+# Create the formula and print it
+fmla <- blood_pressure ~ age + weight
+fmla
+
+# Fit the model: bloodpressure_model
+bloodpressure_model <- lm(fmla, bloodpressure)
+
+# Print bloodpressure_model and call summary() 
+bloodpressure_model
+summary(bloodpressure_model)
+```
+
+One of the advantages of linear regression is that you can interpret the effects of each variable on the input – to a certain extent. In this case the coefficients for both age and weight are positive, which indicates that bloodpressure tends to increase as both age and weight increase.
+
+### Multivariate linear regression (Part 2)
+
+```{r}
+library(ggplot2)
+
+# Predict blood pressure using bloodpressure_model :prediction
+bloodpressure$prediction <- predict(bloodpressure_model)
+
+# Plot the results
+ggplot(bloodpressure, aes(x = prediction, y = blood_pressure)) + 
+    geom_point() +
+    geom_abline(color = "blue")
+```
+
+The results stay fairly close to the line of perfect prediction, indicating that the model fits the training data well. From a prediction perspective, multivariate linear regression behaves much as simple (one-variable) linear regression does.
