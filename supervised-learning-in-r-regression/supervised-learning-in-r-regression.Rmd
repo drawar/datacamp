@@ -5,8 +5,6 @@ output: html_notebook
 
 ### Multivariate linear regression (Part 1)
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
-
 ```{r}
 # Load data
 bloodpressure <- readRDS("data/bloodpressure.rds")
