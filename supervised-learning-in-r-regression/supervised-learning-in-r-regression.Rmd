@@ -39,3 +39,46 @@ ggplot(bloodpressure, aes(x = prediction, y = blood_pressure)) +
 ```
 
 The results stay fairly close to the line of perfect prediction, indicating that the model fits the training data well. From a prediction perspective, multivariate linear regression behaves much as simple (one-variable) linear regression does.
+
+## Training and Evaluating Regression Models
+
+### Graphically evaluate the unemployment model
+
+In this exercise you will graphically evaluate the unemployment model, `unemployment_model`, that you fit to the unemployment data in the previous chapter. Recall that the model predicts `female_unemployment` from `male_unemployment`.
+
+You will plot the model's predictions against the actual `female_unemployment`; recall the command is of the form
+
+    ggplot(dframe, aes(x = pred, y = outcome)) + 
+          geom_point() +  
+          geom_abline()
+
+Then you will calculate the residuals:
+
+    residuals <- actual outcome - predicted outcome
+
+and plot predictions against residuals. The residual graph will take a slightly different form: you compare the residuals to the horizonal line $x=0$ (using `geom_hline()`) rather than to the line $x=y$. The command will be provided.
+
+```{r}
+# unemployment is in the workspace
+summary(unemployment)
+
+# unemployment_model is in the workspace
+summary(unemployment_model)
+
+# Make predictions from the model
+unemployment$predictions <- predict(unemployment_model)
+
+# Fill in the blanks to plot predictions (on x-axis) versus the female_unemployment rates
+ggplot(unemployment, aes(x = predictions, y = female_unemployment)) + 
+  geom_point() + 
+  geom_abline()
+
+# Calculate residuals
+unemployment$residuals <- unemployment$female_unemployment - unemployment$predictions
+
+# Fill in the blanks to plot predictions (on x-axis) versus the residuals
+ggplot(unemployment, aes(x = predictions, y = residuals)) + 
+  geom_pointrange(aes(ymin = 0, ymax = residuals)) + 
+  geom_hline(yintercept = 0, linetype = 3) + 
+  ggtitle("residuals vs. linear model prediction")
+```
